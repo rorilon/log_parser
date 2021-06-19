@@ -11,9 +11,11 @@ const sortByUnique = (stats: PathStats[]) =>
   stats.sort((a, b) => b.uniqueViews - a.uniqueViews);
 
 export const FileUploadForm = () => {
-  const [stats, setStats] = useState([]);
-  const handleFile = async (event) => {
-    const result: PathStats[] = await getResult(event.target.files[0]);
+  const [stats, setStats] = useState<PathStats[]>([]);
+  const handleFile = async (event: React.ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
+    const files = target.files || [];
+    const result: PathStats[] = await getResult(files[0]);
     setStats(result);
   };
 
