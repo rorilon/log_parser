@@ -11,6 +11,6 @@ interface TotalViewsProps {
   tableData: PathStats[];
 }
 
-export const TotalViews = ({ tableData }: TotalViewsProps) => {
-  return tableData && <DataTable rowsData={tableData} headCells={headCells} />;
-};
+export const TotalViews = ({ tableData }: TotalViewsProps) => (
+  <DataTable rowsData={tableData} headCells={headCells} />
+);
