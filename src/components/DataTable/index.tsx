@@ -33,7 +33,7 @@ export const DataTable = ({ rowsData, headCells }: DataTableProps) => {
         <TableHead>
           <TableRow>
             {headCells.map((headCell) => (
-              <TableCell id={headCell.key}>{headCell.label}</TableCell>
+              <TableCell key={headCell.key}>{headCell.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -41,7 +41,7 @@ export const DataTable = ({ rowsData, headCells }: DataTableProps) => {
           {rowsData.map((row, index: number) => (
             <TableRow key={index}>
               {headCells.map((headCell) => (
-                <TableCell>{row[headCell.key]}</TableCell>
+                <TableCell key={row[headCell.key]}>{row[headCell.key]}</TableCell>
               ))}
             </TableRow>
           ))}
