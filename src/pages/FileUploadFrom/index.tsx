@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Divider, Input } from "@material-ui/core";
 import { getPathStats, PathStats } from "./utils";
-import { TotalViews } from "../TotalViews";
-import { UniqueViews } from "../UniqueViews";
+import { TotalViews } from "../../components/TotalViews";
+import { UniqueViews } from "../../components/UniqueViews";
 
 const sortByTotal = (stats: PathStats[]) =>
   stats.sort((a, b) => b.totalViews - a.totalViews);
