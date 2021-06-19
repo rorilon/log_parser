@@ -21,7 +21,7 @@ export const FileUploadForm = () => {
 
   return (
     <>
-      <Input type="file" onChange={handleFile} />
+      <Input type="file" onChange={handleFile} data-testid="uploadButton"/>
       {stats?.length > 0 && (
         <>
           <TotalViews tableData={sortByTotal(stats)} />
