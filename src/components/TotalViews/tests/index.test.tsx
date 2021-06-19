@@ -11,31 +11,20 @@ describe("TotalViews component tests", () => {
   test("renders the correct headers", () => {
     const { queryByText } = render(<TotalViews tableData={testData} />);
 
-    const pathHeader = queryByText("Path");
-    const totalViewsHeader = queryByText("Total Views");
-    const uniqueViewsHeader = queryByText("Unique Views");
-
-    expect(pathHeader).toBeInTheDocument();
-    expect(totalViewsHeader).toBeInTheDocument();
-    expect(uniqueViewsHeader).not.toBeInTheDocument();
+    expect(queryByText("Total Views")).toBeInTheDocument();
+    expect(queryByText("Path")).toBeInTheDocument();
+    expect(queryByText("Unique Views")).not.toBeInTheDocument();
   });
 
   test("renders only the needed data", () => {
     const { queryByText } = render(<TotalViews tableData={testData} />);
 
-    const testPath1 = queryByText("/testPath1");
-    const views1 = queryByText("3");
-    const testPath2 = queryByText("/testPath2");
-    const views2 = queryByText("5");
-    const uniqueViews1 = queryByText("1");
-    const uniqueViews2 = queryByText("4");
+    expect(queryByText("/testPath1")).toBeInTheDocument();
+    expect(queryByText("3")).toBeInTheDocument();
+    expect(queryByText("/testPath2")).toBeInTheDocument();
+    expect(queryByText("5")).toBeInTheDocument();
 
-    expect(testPath1).toBeInTheDocument();
-    expect(views1).toBeInTheDocument();
-    expect(testPath2).toBeInTheDocument();
-    expect(views2).toBeInTheDocument();
-
-    expect(uniqueViews1).not.toBeInTheDocument();
-    expect(uniqueViews2).not.toBeInTheDocument();
+    expect(queryByText("1")).not.toBeInTheDocument();
+    expect(queryByText("4")).not.toBeInTheDocument();
   });
 });
