@@ -58,10 +58,10 @@ export const parseLine = (line: string): Line => {
 };
 
 export const mapToPathStats = (internalPathStats: InternalPathStats) => {
-  return Object.keys(internalPathStats).map((path) => ({
+  return Object.keys(internalPathStats)?.map((path) => ({
     path,
-    totalViews: internalPathStats[path].visitsTotal,
-    uniqueViews: internalPathStats[path].ips.size,
+    totalViews: internalPathStats[path]?.visitsTotal,
+    uniqueViews: internalPathStats[path]?.ips?.size,
   }));
 };
 
