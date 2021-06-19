@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Input } from "@material-ui/core";
+import { Divider, Input } from "@material-ui/core";
 import { getResult, PathStats } from "./utils";
 import { TotalViews } from "../TotalViews";
+import { UniqueViews } from "../UniqueViews";
 
 const sortByTotal = (stats: PathStats[]) =>
   stats.sort((a, b) => b.totalViews - a.totalViews);
@@ -19,7 +20,13 @@ export const FileUploadForm = () => {
   return (
     <>
       <Input type="file" onChange={handleFile} />
-      <TotalViews tableData={sortByTotal(stats)} />
+      {stats?.length > 0 && (
+        <>
+          <TotalViews tableData={sortByTotal(stats)} />
+          <Divider />
+          <UniqueViews tableData={sortByUnique(stats)} />
+        </>
+      )}
     </>
   );
 };
