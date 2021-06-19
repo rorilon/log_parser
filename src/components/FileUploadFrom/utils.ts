@@ -20,7 +20,7 @@ export interface PathStats {
   uniqueViews: number;
 }
 
-const readUploadedFileAsText = (inputFile: File) => {
+const readUploadedFileAsText = (inputFile: File): Promise<string> => {
   const temporaryFileReader = new FileReader();
 
   return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ const readUploadedFileAsText = (inputFile: File) => {
     };
 
     temporaryFileReader.onload = () => {
-      resolve(temporaryFileReader.result);
+      resolve(temporaryFileReader.result as string);
     };
     temporaryFileReader.readAsText(inputFile);
   });
@@ -45,17 +45,17 @@ export const parseLine = (line: string): Line => {
   return { path: lineContent[0], ip: lineContent[1] };
 };
 
-export const parseResult = (result) => {
-  return Object.keys(result).map((path) => ({
+export const mapToPathStats = (internalPathStats: InternalPathStats) => {
+  return Object.keys(internalPathStats).map((path) => ({
     path,
-    totalViews: result[path].visitsTotal,
-    uniqueViews: result[path].ips.size,
+    totalViews: internalPathStats[path].visitsTotal,
+    uniqueViews: internalPathStats[path].ips.size,
   }));
 };
 
-export const getResult = async (file: File) => {
+export const getPathStats = async (file: File): Promise<PathStats[]> => {
   const result: InternalPathStats = {};
-  const fileContents = await readUploadedFileAsText(file);
+  const fileContents: string = await readUploadedFileAsText(file);
   const lines = splitByLines(fileContents);
   lines.forEach((line) => {
     if (line === "") return;
@@ -69,5 +69,5 @@ export const getResult = async (file: File) => {
       result[path].ips.add(ip);
     }
   });
-  return parseResult(result);
+  return mapToPathStats(result);
 };

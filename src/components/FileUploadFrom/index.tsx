@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Divider, Input } from "@material-ui/core";
-import { getResult, PathStats } from "./utils";
+import { getPathStats, PathStats } from "./utils";
 import { TotalViews } from "../TotalViews";
 import { UniqueViews } from "../UniqueViews";
 
@@ -15,7 +15,7 @@ export const FileUploadForm = () => {
   const handleFile = async (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const files = target.files || [];
-    const result: PathStats[] = await getResult(files[0]);
+    const result: PathStats[] = await getPathStats(files[0]);
     setStats(result);
   };
 
