@@ -4,7 +4,7 @@ import { FileUploadForm } from "./pages/FileUploadForm";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" data-testid="mainAppContainer">
       <FileUploadForm />
     </div>
   );
