@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { FileUploadForm } from "../index";
 import React from "react";
 
@@ -15,18 +15,28 @@ describe("FileUploadForm component tests", () => {
     expect(queryByText("Total Views")).not.toBeInTheDocument();
   });
 
-  test("renders only the needed data", () => {
+  test("renders only the needed data", async () => {
+    jest.spyOn(global.console, "warn").mockImplementation(() => {});
     const file = new File(mockFileContents, "file.log", { type: "text" });
-    const { getByTestId } = render(<FileUploadForm />);
+    const event = {
+      target: {
+        files: [file],
+      },
+    };
+    const { getByTestId, queryByText } = render(<FileUploadForm />);
+
+    expect(getByTestId("uploadButton")).toBeInTheDocument();
 
     const uploadButton = getByTestId("uploadButton");
 
-    Object.defineProperty(uploadButton, "files", {
-      value: [file],
-    });
-
-    fireEvent.change(uploadButton);
+    fireEvent.change(uploadButton, event);
 
     expect(uploadButton.files[0]).toStrictEqual(file);
+
+    await waitFor(() => {
+      expect(console.warn).toBeCalledTimes(1);
+      expect(queryByText("Unique Views")).toBeInTheDocument();
+      expect(queryByText("Total Views")).toBeInTheDocument();
+    });
   });
 });
