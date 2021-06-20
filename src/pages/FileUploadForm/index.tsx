@@ -11,12 +11,10 @@ import {
 import { TotalViews } from "../../components/TotalViews";
 import { UniqueViews } from "../../components/UniqueViews";
 
-
-
 export const FileUploadForm = () => {
   const [stats, setStats] = useState<PathStats[]>([]);
 
-  const handleFile = async (event: React.ChangeEvent) => {
+  const handleFileUpload = async (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const files = target.files || [];
     const internalPathStats: InternalPathStats = await getInternalPathStats(
@@ -27,7 +25,11 @@ export const FileUploadForm = () => {
 
   return (
     <>
-      <Input type="file" onChange={handleFile} data-testid="uploadButton" />
+      <input
+        type="file"
+        onChange={handleFileUpload}
+        data-testid="uploadButton"
+      />
       {stats?.length > 0 && (
         <>
           <TotalViews tableData={sortByTotal(stats)} />
