@@ -5,18 +5,17 @@ import {
   InternalPathStats,
   mapToPathStats,
   PathStats,
+  sortByTotal,
+  sortByUnique,
 } from "./utils";
 import { TotalViews } from "../../components/TotalViews";
 import { UniqueViews } from "../../components/UniqueViews";
 
-const sortByTotal = (stats: PathStats[]) =>
-  stats.sort((a, b) => b.totalViews - a.totalViews);
 
-const sortByUnique = (stats: PathStats[]) =>
-  stats.sort((a, b) => b.uniqueViews - a.uniqueViews);
 
 export const FileUploadForm = () => {
   const [stats, setStats] = useState<PathStats[]>([]);
+
   const handleFile = async (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const files = target.files || [];

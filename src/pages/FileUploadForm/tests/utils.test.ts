@@ -6,6 +6,8 @@ import {
   parseInternalPathStats,
   PathStats,
   readUploadedFileAsText,
+  sortByTotal,
+  sortByUnique,
   splitByLines,
   validateIP,
   validateLine,
@@ -27,6 +29,34 @@ const internalPathStatsResult: InternalPathStats = {
     visitsTotal: 1,
   },
 };
+
+const pathStatsResult: PathStats[] = [
+  { path: "/testPath1", totalViews: 2, uniqueViews: 1 },
+  { path: "/testPath2", totalViews: 1, uniqueViews: 1 },
+];
+
+const unsortedPathStats: PathStats[] = [
+  { path: "/testPath1", totalViews: 1, uniqueViews: 5 },
+  { path: "/testPath2", totalViews: 5, uniqueViews: 1 },
+];
+
+describe("sort functions tests", () => {
+  test("sorts by Total Views", async () => {
+    const sortedByTotalViews = [
+      { path: "/testPath2", totalViews: 5, uniqueViews: 1 },
+      { path: "/testPath1", totalViews: 1, uniqueViews: 5 },
+    ];
+    expect(sortByTotal(unsortedPathStats)).toStrictEqual(sortedByTotalViews);
+  });
+
+  test("sorts by Unique Views", async () => {
+    const sortedByUniqueViews = [
+      { path: "/testPath1", totalViews: 1, uniqueViews: 5 },
+      { path: "/testPath2", totalViews: 5, uniqueViews: 1 },
+    ];
+    expect(sortByUnique(unsortedPathStats)).toStrictEqual(sortedByUniqueViews);
+  });
+});
 
 describe("readUploadedFileAsText function tests", () => {
   const mockParsedFileContents =
@@ -122,11 +152,6 @@ describe("getInternalPathStats function tests", () => {
 });
 
 describe("mapToPathStats function tests", () => {
-  const pathStatsResult: PathStats[] = [
-    { path: "/testPath1", totalViews: 2, uniqueViews: 1 },
-    { path: "/testPath2", totalViews: 1, uniqueViews: 1 },
-  ];
-
   test("returns pathStats object for internalPathStats", () => {
     const pathStats = mapToPathStats(internalPathStatsResult);
     expect(pathStats).toStrictEqual(pathStatsResult);

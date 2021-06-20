@@ -22,6 +22,12 @@ export interface PathStats {
   uniqueViews: number;
 }
 
+export const sortByTotal = (stats: PathStats[]) =>
+    stats.sort((a, b) => b.totalViews - a.totalViews);
+
+export const sortByUnique = (stats: PathStats[]) =>
+    stats.sort((a, b) => b.uniqueViews - a.uniqueViews);
+
 export const readUploadedFileAsText = (inputFile: File): Promise<string> => {
   const temporaryFileReader = new FileReader();
 
