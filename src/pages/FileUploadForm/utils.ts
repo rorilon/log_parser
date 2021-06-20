@@ -23,10 +23,10 @@ export interface PathStats {
 }
 
 export const sortByTotal = (stats: PathStats[]) =>
-    stats.sort((a, b) => b.totalViews - a.totalViews);
+  [...stats].sort((a, b) => b.totalViews - a.totalViews);
 
 export const sortByUnique = (stats: PathStats[]) =>
-    stats.sort((a, b) => b.uniqueViews - a.uniqueViews);
+  [...stats].sort((a, b) => b.uniqueViews - a.uniqueViews);
 
 export const readUploadedFileAsText = (inputFile: File): Promise<string> => {
   const temporaryFileReader = new FileReader();
@@ -91,7 +91,9 @@ export const parseInternalPathStats = (lines: string[]) => {
   return internalPathStats;
 };
 
-export const getInternalPathStats = async (file: File): Promise<InternalPathStats> => {
+export const getInternalPathStats = async (
+  file: File
+): Promise<InternalPathStats> => {
   const fileContents: string = await readUploadedFileAsText(file);
   const lines = splitByLines(fileContents);
   const internalPathStats = parseInternalPathStats(lines);
