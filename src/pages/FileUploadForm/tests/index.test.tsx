@@ -3,7 +3,7 @@ import { FileUploadForm } from "../index";
 import React from "react";
 
 const mockFileContents = [
-  "/testPath1 123.456.789.123 /n /testPath2 123.123.123.123 /n /testPath1 123.456.789.123 /n",
+  "/testPath1 123.456.789.123 \n /testPath2 123.123.123.123 \n /testPath1 123.456.789.123 \n",
 ];
 
 describe("FileUploadForm component tests", () => {

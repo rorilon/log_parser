@@ -12,7 +12,7 @@ interface PathState {
   visitsTotal: number;
 }
 
-type InternalPathStats = {
+export type InternalPathStats = {
   [key: string]: PathState;
 };
 
@@ -56,7 +56,7 @@ export const validateLine = (line: string) => {
 };
 
 export const parseLine = (line: string): Line => {
-  const lineContent = line.split(" ");
+  const lineContent = line.trim().split(" ");
   return { path: lineContent[0], ip: lineContent[1] };
 };
 
@@ -85,9 +85,9 @@ export const parseInternalPathStats = (lines: string[]) => {
   return internalPathStats;
 };
 
-export const getPathStats = async (file: File): Promise<PathStats[]> => {
+export const getInternalPathStats = async (file: File): Promise<InternalPathStats> => {
   const fileContents: string = await readUploadedFileAsText(file);
   const lines = splitByLines(fileContents);
   const internalPathStats = parseInternalPathStats(lines);
-  return mapToPathStats(internalPathStats);
+  return internalPathStats;
 };
