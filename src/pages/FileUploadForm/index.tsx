@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Divider, Input } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import {
   getInternalPathStats,
   InternalPathStats,

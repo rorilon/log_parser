@@ -52,7 +52,7 @@ export const isFakeIP = (ip: string) =>
   /^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/gm.test(ip);
 export const validateIP = (ip: string) => validator.isIP(ip) || isFakeIP(ip);
 export const validatePath = (path: string) =>
-  /^\/[a-zA-Z0-9_.-\/]*/gm.test(path);
+  /^\/[a-zA-Z0-9_.-/]*/gm.test(path);
 
 // the line should contain path and ip-address separated by one space
 export const validateLine = (line: string) => {
