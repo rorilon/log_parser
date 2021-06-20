@@ -1,5 +1,5 @@
 import React from "react";
-import { PathStats } from "../../pages/FileUploadFrom/utils";
+import { PathStats } from "../../pages/FileUploadForm/utils";
 import { DataTable, HeadCell } from "../DataTable";
 
 const headCells: HeadCell[] = [

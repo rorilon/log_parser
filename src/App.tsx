@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { FileUploadForm } from "./pages/FileUploadFrom";
+import { FileUploadForm } from "./pages/FileUploadForm";
 
 function App() {
   return (

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Divider, Input } from "@material-ui/core";
-import { getPathStats, PathStats } from "./utils";
+import {
+  getInternalPathStats,
+  InternalPathStats,
+  mapToPathStats,
+  PathStats,
+} from "./utils";
 import { TotalViews } from "../../components/TotalViews";
 import { UniqueViews } from "../../components/UniqueViews";
 
@@ -15,13 +20,15 @@ export const FileUploadForm = () => {
   const handleFile = async (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const files = target.files || [];
-    const result: PathStats[] = await getPathStats(files[0]);
-    setStats(result);
+    const internalPathStats: InternalPathStats = await getInternalPathStats(
+      files[0]
+    );
+    setStats(mapToPathStats(internalPathStats));
   };
 
   return (
     <>
-      <Input type="file" onChange={handleFile} data-testid="uploadButton"/>
+      <Input type="file" onChange={handleFile} data-testid="uploadButton" />
       {stats?.length > 0 && (
         <>
           <TotalViews tableData={sortByTotal(stats)} />

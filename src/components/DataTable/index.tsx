@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { PathStats } from "../../pages/FileUploadFrom/utils";
+import { PathStats } from "../../pages/FileUploadForm/utils";
 
 const useStyles = makeStyles({
   table: {
@@ -32,16 +32,18 @@ export const DataTable = ({ rowsData, headCells }: DataTableProps) => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {headCells.map((headCell) => (
+            {headCells?.map((headCell) => (
               <TableCell key={headCell.key}>{headCell.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rowsData.map((row, index: number) => (
+          {rowsData?.map((row, index: number) => (
             <TableRow key={index}>
-              {headCells.map((headCell) => (
-                <TableCell key={row[headCell.key]}>{row[headCell.key]}</TableCell>
+              {headCells?.map((headCell) => (
+                <TableCell key={row[headCell.key]}>
+                  {row[headCell.key]}
+                </TableCell>
               ))}
             </TableRow>
           ))}
