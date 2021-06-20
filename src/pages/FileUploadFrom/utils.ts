@@ -22,7 +22,7 @@ export interface PathStats {
   uniqueViews: number;
 }
 
-const readUploadedFileAsText = (inputFile: File): Promise<string> => {
+export const readUploadedFileAsText = (inputFile: File): Promise<string> => {
   const temporaryFileReader = new FileReader();
 
   return new Promise((resolve, reject) => {
@@ -41,13 +41,16 @@ const readUploadedFileAsText = (inputFile: File): Promise<string> => {
 export const splitByLines = (file: string) => {
   return file.split("\n");
 };
-// to validate ips from the example file :)
-const isFakeIP = (ip: string) => /^\d{3}.\d{3}.\d{3}.\d{3}$/gm.test(ip);
-const validateIP = (ip: string) => validator.isIP(ip) || isFakeIP(ip);
-const validatePath = (path: string) => /^\/[a-zA-Z0-9_.-\/]*/gm.test(path);
+// to validate ips from the example file, they do not fall under the valid IP standards
+export const isFakeIP = (ip: string) =>
+  /^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/gm.test(ip);
+export const validateIP = (ip: string) => validator.isIP(ip) || isFakeIP(ip);
+export const validatePath = (path: string) =>
+  /^\/[a-zA-Z0-9_.-\/]*/gm.test(path);
 
-const validateLine = (line: string) => {
-  const lineContent = line.split(" ");
+// the line should contain path and ip-address separated by one space
+export const validateLine = (line: string) => {
+  const lineContent = line.trim().split(" ");
   if (lineContent.length !== 2) return false;
   return validatePath(lineContent[0]) && validateIP(lineContent[1]);
 };
@@ -65,7 +68,7 @@ export const mapToPathStats = (internalPathStats: InternalPathStats) => {
   }));
 };
 
-const parseInternalPathStats = (lines: string[]) => {
+export const parseInternalPathStats = (lines: string[]) => {
   const internalPathStats: InternalPathStats = {};
   lines.forEach((line: string) => {
     if (!validateLine(line)) {
@@ -74,13 +77,10 @@ const parseInternalPathStats = (lines: string[]) => {
     }
     const lineParsed = parseLine(line);
     const { path, ip } = lineParsed;
-    if (internalPathStats[path]) {
-      internalPathStats[path].ips.add(ip);
-      internalPathStats[path].visitsTotal += 1;
-    } else {
-      internalPathStats[path] = { ips: new Set(), visitsTotal: 1 };
-      internalPathStats[path].ips.add(ip);
-    }
+    if (!internalPathStats[path])
+      internalPathStats[path] = { ips: new Set(), visitsTotal: 0 };
+    internalPathStats[path].ips.add(ip);
+    internalPathStats[path].visitsTotal += 1;
   });
   return internalPathStats;
 };
